@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>require_relativeの是非 | 3log</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="『パーフェクトRuby』(Amazon)によると
+
+Kernel.#require_relativeは、実行中のファイルから見た相対パスでrequireを行います。requireとは異なり、$LOAD_PATHは探索されません。相対パスの基準となるのはRubyが実行されているディレクトリではなく、require_relativeを呼び出したファイルのディレクトリです。
+
+とのことで、ライブラリを実">
+<meta property="og:type" content="article">
+<meta property="og:title" content="require_relativeの是非">
+<meta property="og:url" content="http://3100.github.io/log/2015/08/18/require-relative/index.html">
+<meta property="og:site_name" content="3log">
+<meta property="og:description" content="『パーフェクトRuby』(Amazon)によると
+
+Kernel.#require_relativeは、実行中のファイルから見た相対パスでrequireを行います。requireとは異なり、$LOAD_PATHは探索されません。相対パスの基準となるのはRubyが実行されているディレクトリではなく、require_relativeを呼び出したファイルのディレクトリです。
+
+とのことで、ライブラリを実">
+<meta property="og:updated_time" content="2015-12-29T06:21:43.636Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="require_relativeの是非">
+<meta name="twitter:description" content="『パーフェクトRuby』(Amazon)によると
+
+Kernel.#require_relativeは、実行中のファイルから見た相対パスでrequireを行います。requireとは異なり、$LOAD_PATHは探索されません。相対パスの基準となるのはRubyが実行されているディレクトリではなく、require_relativeを呼び出したファイルのディレクトリです。
+
+とのことで、ライブラリを実">
+  
+    <link rel="alternative" href="/log/atom.xml" title="3log" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/log/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/log/">3log</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/log/">Home</a></li><li><a href="/log/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/log/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://3100.github.io/log"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-require-relative" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/log/2015/08/18/require-relative/" class="article-date">
+  <time datetime="2015-08-18T07:39:25.000Z" itemprop="datePublished">2015-08-18</time>
+</a>
+		</span>
+		<span class="meta-elements author">3100</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      require_relativeの是非
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>『パーフェクトRuby』(<a href="http://www.amazon.co.jp/dp/4774158798" target="_blank" rel="external">Amazon</a>)によると</p>
+<blockquote>
+<p>Kernel.#require_relativeは、実行中のファイルから見た相対パスでrequireを行います。requireとは異なり、$LOAD_PATHは探索されません。相対パスの基準となるのはRubyが実行されているディレクトリではなく、require_relativeを呼び出したファイルのディレクトリです。</p>
+</blockquote>
+<p>とのことで、ライブラリを実装する場合などにお世話になるような機能を提供している。</p>
+<h2 id="u4F7F_u308F_u308C_u3066_u3044_u306A_u3044_uFF1F"><a href="#u4F7F_u308F_u308C_u3066_u3044_u306A_u3044_uFF1F" class="headerlink" title="使われていない？"></a>使われていない？</h2><p>が、実際のところは<br><a href="http://qiita.com/nekogeruge_987/items/2d18f388219597c75e05" target="_blank" rel="external">Ruby1.9.2以降でrequireする際の注意点 - Qiita</a><br>のコメント欄にあるように</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$LOAD_PATH</span> &lt;&lt; <span class="string">'/lib'</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">'filename'</span></span><br></pre></td></tr></table></figure>
+<p>などとやることで、require_relativeを使わないという方法が存在する。<br>Ruby 1.9からは</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$:</span>.unshift(<span class="string">'lib'</span>)</span><br></pre></td></tr></table></figure>
+<p>でも良い。</p>
+<p><a href="http://www.ownway.info/Ruby/idiom/add_library_path" target="_blank" rel="external">ライブラリ(gem)のパス追加 - 君の瞳はまるでルビー - Ruby 関連まとめサイト</a></p>
+<h2 id="Ruby_2-1_u4EE5_u524D"><a href="#Ruby_2-1_u4EE5_u524D" class="headerlink" title="Ruby 2.1以前"></a>Ruby 2.1以前</h2><p>config.ruなどのようにeval内でrequire_relativeが呼ばれているとエラーになる様子。</p>
+<p><a href="http://ginzanomama.hatenablog.com/entry/2013/04/01/171119" target="_blank" rel="external">config.ruの中でrequire_relativeするとエラーになる - みんなのちからになりたい</a></p>
+<p><a href="http://www.benjaminfleischer.com/2013/07/18/ruby-requires-confusion/" target="_blank" rel="external">Ruby requires confusion – Benjamin Fleischer</a></p>
+<h2 id="u4F59_u8AC7"><a href="#u4F59_u8AC7" class="headerlink" title="余談"></a>余談</h2><p><a href="https://www.reddit.com/r/ruby/comments/3341zm/require_best_practices/" target="_blank" rel="external">‘Require’ Best Practices? : ruby</a></p>
+<p>では、requireを使うほうが好きな人が多そうだった。<br>一方、</p>
+<ul>
+<li>require_relativeの方が速いだろう</li>
+<li>自分の管理しているものはrequire_relative、それ以外はrequireで使い分ける</li>
+</ul>
+<p>という声もあった。</p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/ruby/">ruby</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+    <a href="/log/2015/09/26/brew-update-error/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          brew updateでHOMEBREW_CORE_FORMULA_REGEX云々のエラー
+        
+      </div>
+    </a>
+  
+  
+    <a href="/log/2015/08/10/hexo-cannot-find-module/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          hexoでCannot find moduleエラー
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:3100.github.io/log">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/log/">3log</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2015 3100<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/log/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/log/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/log/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>

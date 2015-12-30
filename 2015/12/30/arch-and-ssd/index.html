@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Arch LinuxでProfile-sync-daemonを導入してSSDの劣化を抑える(1) | 3log</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="MacBook Air(mid-2012)にArch Linuxを載せて(デュアルブート)動かしています。FirefoxやChromeを使う際に、ブラウザキャッシュの頻繁な書き込みがSSDの寿命を短くするといった言及をいくつか見たので、対応することにしました。
+基本的には以下の記事と、Arch Wikiに従います。
+Arch Linux を SSD に移した時のメモ | Basic Werk
+上記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arch LinuxでProfile-sync-daemonを導入してSSDの劣化を抑える(1)">
+<meta property="og:url" content="http://3100.github.io/log/2015/12/30/arch-and-ssd/index.html">
+<meta property="og:site_name" content="3log">
+<meta property="og:description" content="MacBook Air(mid-2012)にArch Linuxを載せて(デュアルブート)動かしています。FirefoxやChromeを使う際に、ブラウザキャッシュの頻繁な書き込みがSSDの寿命を短くするといった言及をいくつか見たので、対応することにしました。
+基本的には以下の記事と、Arch Wikiに従います。
+Arch Linux を SSD に移した時のメモ | Basic Werk
+上記">
+<meta property="og:updated_time" content="2015-12-30T03:47:12.822Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Arch LinuxでProfile-sync-daemonを導入してSSDの劣化を抑える(1)">
+<meta name="twitter:description" content="MacBook Air(mid-2012)にArch Linuxを載せて(デュアルブート)動かしています。FirefoxやChromeを使う際に、ブラウザキャッシュの頻繁な書き込みがSSDの寿命を短くするといった言及をいくつか見たので、対応することにしました。
+基本的には以下の記事と、Arch Wikiに従います。
+Arch Linux を SSD に移した時のメモ | Basic Werk
+上記">
+  
+    <link rel="alternative" href="/log/atom.xml" title="3log" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/log/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/log/">3log</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/log/">Home</a></li><li><a href="/log/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/log/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://3100.github.io/log"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-arch-and-ssd" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/log/2015/12/30/arch-and-ssd/" class="article-date">
+  <time datetime="2015-12-30T01:53:13.000Z" itemprop="datePublished">2015-12-30</time>
+</a>
+		</span>
+		<span class="meta-elements author">3100</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      Arch LinuxでProfile-sync-daemonを導入してSSDの劣化を抑える(1)
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>MacBook Air(mid-2012)にArch Linuxを載せて(デュアルブート)動かしています。<br>FirefoxやChromeを使う際に、ブラウザキャッシュの頻繁な書き込みがSSDの寿命を短くするといった言及をいくつか見たので、対応することにしました。</p>
+<p>基本的には以下の記事と、Arch Wikiに従います。</p>
+<p><a href="http://basicwerk.com/blog/archives/1781" target="_blank" rel="external">Arch Linux を SSD に移した時のメモ | Basic Werk</a></p>
+<p>上記記事で言及されている<code>/etc/fstab</code>の設定についてはArch Linux導入時に済ませているので、割愛します。Arch Wikiの導入ガイドに従っていれば済んでいるかと思います。</p>
+<h2 id="profile-sync-daemon__28AUR_29"><a href="#profile-sync-daemon__28AUR_29" class="headerlink" title="profile-sync-daemon (AUR)"></a>profile-sync-daemon (AUR)</h2><p>ブラウザキャッシュやプロファイルをRAM上で管理するためのサービスを提供します。内部的には<code>rsync</code>を利用して同期を取るようです。</p>
+<p><a href="https://wiki.archlinuxjp.org/index.php/Profile-sync-daemon" target="_blank" rel="external">Profile-sync-daemon - ArchWiki</a></p>
+<p>AURパッケージなのでyaourtの利用を推奨します。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yaourt -S profile-sync-daemon</span><br></pre></td></tr></table></figure>
+<p>Wikiでは<code>/etc/psd.conf</code>を設定ファイルとして利用する書かれていますが、現時点(v6.20)では既にこの方法は陳腐化しています。代わりにユーザのホームフォルダで設定ファイルを管理するようになっています。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ profile-sync-daemon parse</span><br></pre></td></tr></table></figure>
+<p>を実行すると、設定ファイルがどこに置かれたかが表示されますので、そのファイルを編集します。デフォルトでは<code>$HOME/.config/psd/psd.conf</code>あたりになるようです。</p>
+<p>自分の環境では<code>firefox</code>(メイン)と<code>google-chrome</code>(AmazonプライムやYoutube用)を使っているので、以下のように設定しています。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="setting">BROWSERS=<span class="value"><span class="string">"firefox google-chrome"</span></span></span></span><br></pre></td></tr></table></figure>
+<p>また、可能であれば<code>overlayfs</code>を有効にすることで、RAMの使用量を減らし、同期を高速化できます。(事前準備については後述)</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="setting">USE_OVERLAYFS=<span class="value"><span class="string">"yes"</span></span></span></span><br></pre></td></tr></table></figure>
+<p>設定ファイルを更新後、サービスを起動します。次回再起動時以降に、自動起動できるようにします。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl --user start psd.service</span><br><span class="line">$ systemctl --user <span class="built_in">enable</span> psd.service</span><br></pre></td></tr></table></figure>
+<h3 id="overlayfs_u306E_u8A2D_u5B9A"><a href="#overlayfs_u306E_u8A2D_u5B9A" class="headerlink" title="overlayfsの設定"></a>overlayfsの設定</h3><p>Linuxのカーネルが3.18.0以降ではoverlayfsが利用可能です。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ uname -r</span><br></pre></td></tr></table></figure>
+<p>でバージョンの確認ができます。</p>
+<p>管理者権限で</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># modprobe overlay</span><br></pre></td></tr></table></figure>
+<p>して<code>overlay</code>モジュールをロードします。環境によっては<code>overlayfs</code>の場合もあるようです。</p>
+<p>起動時に読み込ませるためには<code>/etc/modules-load.d/overlay.conf</code>(名前は自由)を作成し、読み込ませたいモジュール名として<code>overlay</code>を記述します。</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># 起動時に読み込むモジュール名のみ指定</span></span><br><span class="line">overlay</span><br></pre></td></tr></table></figure>
+<h3 id="overlayfs_u304C_u6709_u52B9_u306B_u306A_u3089_u306A_u3044"><a href="#overlayfs_u304C_u6709_u52B9_u306B_u306A_u3089_u306A_u3044" class="headerlink" title="overlayfsが有効にならない"></a>overlayfsが有効にならない</h3><p>上記の設定などが済んだあとで、正しく設定がされているかどうかを確認してみましょう。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ psd parse</span><br><span class="line"> ERROR! To use overlayfs mode, &lt;username&gt; needs sudo access to /usr/bin/psd-overlay-helper</span><br><span class="line"></span><br><span class="line"> Add the following line to the end of /etc/sudoers to <span class="built_in">enable</span> this functionality:</span><br><span class="line">   &lt;username&gt; ALL=(ALL) NOPASSWD: /usr/bin/psd-overlay-helper</span><br></pre></td></tr></table></figure>
+<p>権限周りで怒られていますね。<code>visudo</code>して、最下行を追加します。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ psd parse</span><br><span class="line">Profile-sync-daemon v6.<span class="number">20</span> on Arch Linux</span><br><span class="line"></span><br><span class="line"> Systemd service is currently active.</span><br><span class="line"> Systemd resync-timer is currently active.</span><br><span class="line"> Overlayfs v23 is currently active.</span><br><span class="line"></span><br><span class="line">Psd will manage the following per /home/&lt;username&gt;/.config/psd/psd.conf:</span><br><span class="line"></span><br><span class="line"> browser/psname:  firefox/firefox</span><br><span class="line"> owner/group id:  &lt;username&gt;/<span class="number">100</span></span><br><span class="line"> sync target:     /home/&lt;username&gt;/.mozilla/firefox/ffzva242.default</span><br><span class="line"> tmpfs dir:       /run/user/<span class="number">1000</span>/&lt;username&gt;-firefox-ffzva242.default</span><br><span class="line"> profile size:    <span class="number">193</span>M</span><br><span class="line"> overlayfs size:</span><br><span class="line"> recovery <span class="built_in">dirs</span>:   none</span><br><span class="line"></span><br><span class="line"> browser/psname:  google-chrome/chrome</span><br><span class="line"> owner/group id:  &lt;username&gt;/<span class="number">100</span></span><br><span class="line"> sync target:     /home/&lt;username&gt;/.config/google-chrome</span><br><span class="line"> tmpfs dir:       /run/user/<span class="number">1000</span>/&lt;username&gt;-google-chrome</span><br><span class="line"> profile size:    <span class="number">77</span>M</span><br><span class="line"> overlayfs size:</span><br><span class="line"> recovery <span class="built_in">dirs</span>:   none</span><br></pre></td></tr></table></figure>
+<p>今度は正しく動作していることが確認できました。</p>
+<p>実際には、各ブラウザはプロファイル以外のキャッシュも管理しているので、これらもRAM上に移すと良いでしょう。<br>長くなってきたので、この話題は<a href="http://3100.github.io/log/2015/12/30/arch-and-ssd-2/">次回</a>へまわします。</p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/arch/">arch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/ssd/">ssd</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+    <a href="/log/2015/12/30/arch-and-ssd-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Arch LinuxでProfile-sync-daemonを導入してSSDの劣化を抑える(2)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/log/2015/11/30/httpoison-040-is-too-old/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Httpoison 0.4から0.8への変更
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:3100.github.io/log">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/log/">3log</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2015 3100<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/log/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/log/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/log/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>

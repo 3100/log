@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>hexoでCannot find moduleエラー | 3log</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="hexoコマンド実行時にエラーが出力される発生環境は以下の通り。Archでは出ていない。
+
+iojs v3.0.0
+OSX 10.10.4
+
+各コマンド実行時に以下のエラーが出力される。
+123&amp;#123; [Error: Cannot find module &apos;./build/Release/DTraceProviderBindings&apos;] code: &apos;MODULE_NOT_FOUND&apos; &amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexoでCannot find moduleエラー">
+<meta property="og:url" content="http://3100.github.io/log/2015/08/10/hexo-cannot-find-module/index.html">
+<meta property="og:site_name" content="3log">
+<meta property="og:description" content="hexoコマンド実行時にエラーが出力される発生環境は以下の通り。Archでは出ていない。
+
+iojs v3.0.0
+OSX 10.10.4
+
+各コマンド実行時に以下のエラーが出力される。
+123&amp;#123; [Error: Cannot find module &apos;./build/Release/DTraceProviderBindings&apos;] code: &apos;MODULE_NOT_FOUND&apos; &amp;#">
+<meta property="og:updated_time" content="2015-12-29T06:21:43.636Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexoでCannot find moduleエラー">
+<meta name="twitter:description" content="hexoコマンド実行時にエラーが出力される発生環境は以下の通り。Archでは出ていない。
+
+iojs v3.0.0
+OSX 10.10.4
+
+各コマンド実行時に以下のエラーが出力される。
+123&amp;#123; [Error: Cannot find module &apos;./build/Release/DTraceProviderBindings&apos;] code: &apos;MODULE_NOT_FOUND&apos; &amp;#">
+  
+    <link rel="alternative" href="/log/atom.xml" title="3log" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/log/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/log/">3log</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/log/">Home</a></li><li><a href="/log/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/log/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://3100.github.io/log"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-hexo-cannot-find-module" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/log/2015/08/10/hexo-cannot-find-module/" class="article-date">
+  <time datetime="2015-08-10T14:45:43.000Z" itemprop="datePublished">2015-08-10</time>
+</a>
+		</span>
+		<span class="meta-elements author">3100</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      hexoでCannot find moduleエラー
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<h1 id="hexo_u30B3_u30DE_u30F3_u30C9_u5B9F_u884C_u6642_u306B_u30A8_u30E9_u30FC_u304C_u51FA_u529B_u3055_u308C_u308B"><a href="#hexo_u30B3_u30DE_u30F3_u30C9_u5B9F_u884C_u6642_u306B_u30A8_u30E9_u30FC_u304C_u51FA_u529B_u3055_u308C_u308B" class="headerlink" title="hexoコマンド実行時にエラーが出力される"></a>hexoコマンド実行時にエラーが出力される</h1><p>発生環境は以下の通り。Archでは出ていない。</p>
+<ul>
+<li>iojs v3.0.0</li>
+<li>OSX 10.10.4</li>
+</ul>
+<p>各コマンド実行時に以下のエラーが出力される。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; [<span class="string">Error:</span> Cannot find module <span class="string">'./build/Release/DTraceProviderBindings'</span>] <span class="string">code:</span> <span class="string">'MODULE_NOT_FOUND'</span> &#125;</span><br><span class="line">&#123; [<span class="string">Error:</span> Cannot find module <span class="string">'./build/default/DTraceProviderBindings'</span>] <span class="string">code:</span> <span class="string">'MODULE_NOT_FOUND'</span> &#125;</span><br><span class="line">&#123; [<span class="string">Error:</span> Cannot find module <span class="string">'./build/Debug/DTraceProviderBindings'</span>] <span class="string">code:</span> <span class="string">'MODULE_NOT_FOUND'</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>調べたらissueが上がっていた。</p>
+<p>cf. <a href="https://github.com/hexojs/hexo/issues/1055" target="_blank" rel="external">hexo shows error message · Issue #1055 · hexojs/hexo</a></p>
+<h1 id="u89E3_u6CD5"><a href="#u89E3_u6CD5" class="headerlink" title="解法"></a>解法</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo --no-optional</span><br></pre></td></tr></table></figure>
+<p>すると良いみたい。試したところ確かにエラーが出なくなった。あるいは、最初の<code>npm install</code>時に</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --no-optional</span><br></pre></td></tr></table></figure>
+<p>としてもエラーは出なかった。</p>
+<h2 id="u2013no-optional"><a href="#u2013no-optional" class="headerlink" title="–no-optional"></a>–no-optional</h2><p><a href="https://docs.npmjs.com/cli/install" target="_blank" rel="external">npmのドキュメント</a>によると</p>
+<blockquote>
+<p>The –no-optional argument will prevent optional dependencies from being installed.</p>
+</blockquote>
+<p>とのこと。</p>
+<h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><p><code>--no-optional</code>を付けるかどうかでpackage.jsonは変化するだろうか。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo --no-optional --save</span><br></pre></td></tr></table></figure>
+<p>結論からいうと、package.jsonは変わらなかった。</p>
+<p>別ディレクトリに<code>git clone</code>して<code>npm install</code>するとエラーが発生する。</p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/npm/">npm</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+    <a href="/log/2015/08/18/require-relative/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          require_relativeの是非
+        
+      </div>
+    </a>
+  
+  
+    <a href="/log/2015/08/10/hexo-with-subdirectory/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          gh-pagesとhexo(サブディレクトリ下での使用)
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:3100.github.io/log">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/log/">3log</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2015 3100<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/log/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/log/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/log/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>
