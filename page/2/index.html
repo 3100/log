@@ -47,6 +47,86 @@
     <div id="main">
       
   
+    <article id="post-hexo-with-subdirectory" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/log/2015/08/10/hexo-with-subdirectory/" class="article-date">
+  <time datetime="2015-08-10T10:14:30.000Z" itemprop="datePublished">2015-08-10</time>
+</a>
+		</span>
+		<span class="meta-elements author">3100</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/log/2015/08/10/hexo-with-subdirectory/">gh-pagesとhexo(サブディレクトリ下での使用)</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<h1 id="hexo_u3092_u30B5_u30D6_u30C7_u30A3_u30EC_u30AF_u30C8_u30EA_u4E0B_u3067_u4F7F_u7528_u3057_u305F_u3044"><a href="#hexo_u3092_u30B5_u30D6_u30C7_u30A3_u30EC_u30AF_u30C8_u30EA_u4E0B_u3067_u4F7F_u7528_u3057_u305F_u3044" class="headerlink" title="hexoをサブディレクトリ下で使用したい"></a>hexoをサブディレクトリ下で使用したい</h1><p>githubで静的サイトジェネレータを使ったblogもどきを複数運用したい。githubには</p>
+<ul>
+<li>&lt;ユーザ名&gt;.github.io</li>
+<li>&lt;組織名&gt;.github.io</li>
+<li>&lt;ユーザ名&gt;.github.io/&lt;プロジェクト名&gt;</li>
+</ul>
+<p>の3通りの方法で<a href="https://pages.github.com/" target="_blank" rel="external">Webサイトを作れる</a>のだが、今回は3番目の場合について。<br>hexoのgithubを見るとサブディレクトリに関するissueが定期的に上がるが、自分も引っかかった。</p>
+<h2 id="TL_3BDR"><a href="#TL_3BDR" class="headerlink" title="TL;DR"></a>TL;DR</h2><p>theme側の_config.ymlに書かれている項目のうち上書きしたいものを、プロジェクトの_config.yml内theme_configに記述していけば良い。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">theme_config:</span></span><br><span class="line"><span class="label">  menu:</span></span><br><span class="line"><span class="label">    Home:</span> <span class="regexp">/&lt;project&gt;/</span></span><br><span class="line"><span class="label">    Archives:</span> <span class="regexp">/&lt;project&gt;/</span>archives</span><br></pre></td></tr></table></figure>
+<h2 id="u57FA_u672C_u8A2D_u5B9A"><a href="#u57FA_u672C_u8A2D_u5B9A" class="headerlink" title="基本設定"></a>基本設定</h2><p>hexoでサブディレクトリを扱う場合には_config.ymlに以下のような設定を行えば良い。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">url</span>: <span class="string">http://&lt;your id&gt;.github.io/&lt;project&gt;</span></span><br><span class="line"><span class="attribute">root</span>: <span class="string">/&lt;project&gt;/</span></span><br><span class="line"></span><br><span class="line"><span class="stylus">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github<span class="class">.com</span>:&lt;your id&gt;/&lt;project&gt;<span class="class">.git</span></span><br><span class="line">  branch: gh-pages</span></span><br></pre></td></tr></table></figure>
+<p>また、theme側の設定では以下のような設定になっていることが多い。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">menu</span>:</span><br><span class="line">  <span class="attribute">Home</span>: /</span><br><span class="line">  <span class="attribute">Archives</span>: /archives</span><br></pre></td></tr></table></figure>
+<p>この場合、当然Homeは<code>http://&lt;your id&gt;.github.io/</code>を指し示す。<br>theme側の_config.ymlに書かれている通りなので正しい挙動なのだが、これではサブディレクトリに関する設定をtheme側でも行わなくてはいけないことになる。</p>
+<ul>
+<li>themeをgitのsubmoduleとして管理している場合にはわざわざforkしなくてはいけない。</li>
+<li>ルートに関する設定を複数箇所で指定するのは面倒。</li>
+</ul>
+<p>これを</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">menu</span>:</span><br><span class="line">  <span class="attribute">Home</span>: .</span><br><span class="line">  <span class="attribute">Archives</span>: archives</span><br></pre></td></tr></table></figure>
+<p>などとすると一見うまくいくように見えるが、個別の記事を表示するとうまくいかない。<br>例えば<code>/&lt;project&gt;/2015/08/10/sample.html</code>のような記事から<code>Archives</code>をクリックすると<code>/&lt;project&gt;/2015/08/10/archives</code>に飛んでしまう。</p>
+<h2 id="u30D7_u30ED_u30B8_u30A7_u30AF_u30C8_u306E_u8A2D_u5B9A_u3068_u30C6_u30FC_u30DE_u306E_u8A2D_u5B9A_u3067_u306F_u5F8C_u8005_u304C_u512A_u5148_u3055_u308C_u308B"><a href="#u30D7_u30ED_u30B8_u30A7_u30AF_u30C8_u306E_u8A2D_u5B9A_u3068_u30C6_u30FC_u30DE_u306E_u8A2D_u5B9A_u3067_u306F_u5F8C_u8005_u304C_u512A_u5148_u3055_u308C_u308B" class="headerlink" title="プロジェクトの設定とテーマの設定では後者が優先される"></a>プロジェクトの設定とテーマの設定では後者が優先される</h2><p>menu項目は大抵の場合theme側の_config.ymlに記述されているが、プロジェクト自体の_config.ymlでmenuを設定しても上書きすることはできない。<br>例えば以下のような設定を行ったとする。</p>
+<h3 id="theme_u306E_config-yml"><a href="#theme_u306E_config-yml" class="headerlink" title="themeの_config.yml"></a>themeの_config.yml</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">menu</span>:</span><br><span class="line">  <span class="attribute">Home</span>: /</span><br><span class="line">  <span class="attribute">Archives</span>: /archives</span><br></pre></td></tr></table></figure>
+<h3 id="u30D7_u30ED_u30B8_u30A7_u30AF_u30C8_u306E_config-yml"><a href="#u30D7_u30ED_u30B8_u30A7_u30AF_u30C8_u306E_config-yml" class="headerlink" title="プロジェクトの_config.yml"></a>プロジェクトの_config.yml</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">menu</span>:</span><br><span class="line">  <span class="attribute">Home</span>: /subdirectory</span><br><span class="line">  <span class="attribute">Archives</span>: /subdirectory/archives</span><br></pre></td></tr></table></figure>
+<p>この時、直感的にはプロジェクト側の設定が優先されそうだが、実際にはtheme側の設定が優先されてしまう。</p>
+<h2 id="theme_config_u3068_u3044_u3046_u8A2D_u5B9A_u9805_u76EE_u3092_u5229_u7528_u3059_u308B"><a href="#theme_config_u3068_u3044_u3046_u8A2D_u5B9A_u9805_u76EE_u3092_u5229_u7528_u3059_u308B" class="headerlink" title="theme_configという設定項目を利用する"></a>theme_configという設定項目を利用する</h2><p>hexoのドキュメントを見ても記述されていなかったように思うのだがソースコードを追っていくと、theme_configという項目が最優先されることがわかった。<br>具体的には<code>/lib/hexo/index.js</code>内で</p>
+<blockquote>
+<p>Locals.prototype.theme = _.extend({}, config, theme.config, config.theme_config);</p>
+</blockquote>
+<p>とある。<code>_.extend()</code>はlodashの提供するメソッドで、複数の引数をとりそれぞれの連想配列をマージする。その際に重複したキーはどんどん更新される。<br>どういうことかというと、プロジェクト側に以下のように設定することで、themeの設定を上書きすることができる。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">theme_config</span>:</span><br><span class="line">  <span class="attribute">menu</span>:</span><br><span class="line">    <span class="attribute">Home</span>: /subdirectory</span><br><span class="line">    <span class="attribute">Archives</span>: /subdirectory/archives</span><br></pre></td></tr></table></figure>
+<p>この設定はtheme側の_config.ymlより優先されるので、theme側の設定をいじらずに済むことがわかった。</p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/hexo/">hexo</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
     <article id="post-mackerel-on-arch" class="post">
 	<footer class="entry-meta-header">
 		<span class="meta-elements date">

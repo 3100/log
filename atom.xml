@@ -4,7 +4,7 @@
   
   <link href="/log/atom.xml" rel="self"/>
   <link href="http://3100.github.io/log/"/>
-  <updated>2015-12-30T03:53:54.461Z</updated>
+  <updated>2015-12-30T13:36:47.953Z</updated>
   <id>http://3100.github.io/log/</id>
   
   <author>
@@ -13,6 +13,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Arch LinuxでMacのカラープロファイルを利用する]]></title>
+    <link href="http://3100.github.io/log/2015/12/30/use-mac-color-profile-with-arch/"/>
+    <id>http://3100.github.io/log/2015/12/30/use-mac-color-profile-with-arch/</id>
+    <published>2015-12-30T11:58:53.000Z</published>
+    <updated>2015-12-30T13:36:47.953Z</updated>
+    <content type="html"><![CDATA[<p>MacBook AirでArch Linuxを動かしていると、OSXの時の画面と比べて色合いが異なる印象を受けます。これはデフォルトのカラープロファイルがMacで使っていたものと異なるためです。</p>
+<p>自分の環境では、やけに画面が青白く、バックライトを弱くしても目に刺さるような感じがありました。逆に言えば、それだけMacのいわゆる尿液晶に慣れてしまっているのかもしれません。<br>一応、ブルーライト対策としてはOSXで使用しているf.luxに似たアプリとして、<a href="https://wiki.archlinuxjp.org/index.php/Redshift" target="_blank" rel="external">Redshift</a>を導入済みですが、どうも違和感が拭えません。</p>
+<p>そこで、OSXのカラープロファイルをArch上でも再現することにしました。</p>
+<p>基本的には<a href="https://wiki.archlinuxjp.org/index.php/MacBook#.E3.82.AB.E3.83.A9.E3.83.BC.E3.83.97.E3.83.AD.E3.83.95.E3.82.A1.E3.82.A4.E3.83.AB" target="_blank" rel="external">MacBook - ArchWiki</a>のカラープロファイルの項を参考にしています。</p>
+<h2 id="OSX_u306E_u30AB_u30E9_u30FC_u30D7_u30ED_u30D5_u30A1_u30A4_u30EB_u3092_u53D6_u5F97_u3059_u308B"><a href="#OSX_u306E_u30AB_u30E9_u30FC_u30D7_u30ED_u30D5_u30A1_u30A4_u30EB_u3092_u53D6_u5F97_u3059_u308B" class="headerlink" title="OSXのカラープロファイルを取得する"></a>OSXのカラープロファイルを取得する</h2><p>OSXを起動し、<code>/Library/ColorSync/Profiles/Displays/</code>下にあるカラープロファイル(<code>*.icc</code>)をDropBoxか何かのArchからもアクセスできる場所にコピーします。</p>
+<h2 id="xcalib_u306E_u5C0E_u5165"><a href="#xcalib_u306E_u5C0E_u5165" class="headerlink" title="xcalibの導入"></a>xcalibの導入</h2><p>AURとして提供されている<code>xcalib</code>をインストールします。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yaourt -S xcalib</span><br></pre></td></tr></table></figure>
+<p>試しにカラープロファイルを変更してみましょう。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xcalib &lt;path&gt;/your.icc</span><br></pre></td></tr></table></figure>
+<p>画面の色合いが変化すれば正しく動作しています。</p>
+<h2 id="u81EA_u52D5_u8D77_u52D5_u7528_u30B9_u30AF_u30EA_u30D7_u30C8"><a href="#u81EA_u52D5_u8D77_u52D5_u7528_u30B9_u30AF_u30EA_u30D7_u30C8" class="headerlink" title="自動起動用スクリプト"></a>自動起動用スクリプト</h2><p>先ほどのコマンドを毎回ログイン毎に実行したくはないので、自動的に実行されるようにします。お使いのGUI環境次第ですが、<code>Enlightenment</code>の場合は以下のようにできます。</p>
+<h3 id="sh_u30D5_u30A1_u30A4_u30EB_u306E_u4F5C_u6210"><a href="#sh_u30D5_u30A1_u30A4_u30EB_u306E_u4F5C_u6210" class="headerlink" title="shファイルの作成"></a>shファイルの作成</h3><p>適当な名前をつけて、スクリプトファイルを作成します。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span></span><br><span class="line">xcalib &lt;path&gt;/your.icc</span><br></pre></td></tr></table></figure>
+<p>これを実行可能にします。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x &lt;path&gt;/your_script.sh</span><br></pre></td></tr></table></figure>
+<h3 id="u30B9_u30BF_u30FC_u30C8_u30A2_u30C3_u30D7_u30A2_u30D7_u30EA_u30B1_u30FC_u30B7_u30E7_u30F3_u3068_u3057_u3066_u767B_u9332"><a href="#u30B9_u30BF_u30FC_u30C8_u30A2_u30C3_u30D7_u30A2_u30D7_u30EA_u30B1_u30FC_u30B7_u30E7_u30F3_u3068_u3057_u3066_u767B_u9332" class="headerlink" title="スタートアップアプリケーションとして登録"></a>スタートアップアプリケーションとして登録</h3><p>次に、これをスタートアップアプリケーションとして登録します。<br><code>Enlightenment</code>のメニューから設定-&gt;設定パネル-&gt;アプリケーション-&gt;Personal Application Lanchersを選択します。<br>追加ボタンを押し、先ほどのスクリプトファイルに適当な名前を付けて登録します。</p>
+<p>これで、次回以降のログイン時に、Macのカラープロファイルが適用された状態になります。</p>
+<p>ちょっとした違いですが、感覚的にはだいぶ見やすくなった気がします。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>MacBook AirでArch Linuxを動かしていると、OSXの時の画面と比べて色合いが異なる印象を受けます。これはデフォルトのカラープロファイルがMacで使っていたものと異なるためです。</p>
+<p>自分の環境では、やけに画面が青白く、バックライトを弱くしても目に]]>
+    </summary>
+    
+      <category term="arch" scheme="http://3100.github.io/log/tags/arch/"/>
+    
+      <category term="mac" scheme="http://3100.github.io/log/tags/mac/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Arch LinuxでProfile-sync-daemonを導入してSSDの劣化を抑える(2)]]></title>

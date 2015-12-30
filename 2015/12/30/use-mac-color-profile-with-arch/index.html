@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Arch LinuxでMacのカラープロファイルを利用する | 3log</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="MacBook AirでArch Linuxを動かしていると、OSXの時の画面と比べて色合いが異なる印象を受けます。これはデフォルトのカラープロファイルがMacで使っていたものと異なるためです。
+自分の環境では、やけに画面が青白く、バックライトを弱くしても目に刺さるような感じがありました。逆に言えば、それだけMacのいわゆる尿液晶に慣れてしまっているのかもしれません。一応、ブルーライト対策としては">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arch LinuxでMacのカラープロファイルを利用する">
+<meta property="og:url" content="http://3100.github.io/log/2015/12/30/use-mac-color-profile-with-arch/index.html">
+<meta property="og:site_name" content="3log">
+<meta property="og:description" content="MacBook AirでArch Linuxを動かしていると、OSXの時の画面と比べて色合いが異なる印象を受けます。これはデフォルトのカラープロファイルがMacで使っていたものと異なるためです。
+自分の環境では、やけに画面が青白く、バックライトを弱くしても目に刺さるような感じがありました。逆に言えば、それだけMacのいわゆる尿液晶に慣れてしまっているのかもしれません。一応、ブルーライト対策としては">
+<meta property="og:updated_time" content="2015-12-30T13:36:47.953Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Arch LinuxでMacのカラープロファイルを利用する">
+<meta name="twitter:description" content="MacBook AirでArch Linuxを動かしていると、OSXの時の画面と比べて色合いが異なる印象を受けます。これはデフォルトのカラープロファイルがMacで使っていたものと異なるためです。
+自分の環境では、やけに画面が青白く、バックライトを弱くしても目に刺さるような感じがありました。逆に言えば、それだけMacのいわゆる尿液晶に慣れてしまっているのかもしれません。一応、ブルーライト対策としては">
+  
+    <link rel="alternative" href="/log/atom.xml" title="3log" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/log/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div class="mobile-nav-panel">
+	<i class="icon-reorder icon-large"></i>
+</div>
+<header id="header">
+	<h1 class="blog-title">
+		<a href="/log/">3log</a>
+	</h1>
+	<nav class="nav">
+		<ul>
+			<li><a href="/log/">Home</a></li><li><a href="/log/archives">Archives</a></li>
+			<li><a id="nav-search-btn" class="nav-icon" title="Search"></a></li>
+			<li><a href="/log/atom.xml" id="nav-rss-link" class="nav-icon" title="RSS Feed"></a></li>
+		</ul>
+	</nav>
+	<div id="search-form-wrap">
+		<form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://3100.github.io/log"></form>
+	</div>
+</header>
+    <div id="main">
+      <article id="post-use-mac-color-profile-with-arch" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/log/2015/12/30/use-mac-color-profile-with-arch/" class="article-date">
+  <time datetime="2015-12-30T11:58:53.000Z" itemprop="datePublished">2015-12-30</time>
+</a>
+		</span>
+		<span class="meta-elements author">3100</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 class="article-title entry-title" itemprop="name">
+      Arch LinuxでMacのカラープロファイルを利用する
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>MacBook AirでArch Linuxを動かしていると、OSXの時の画面と比べて色合いが異なる印象を受けます。これはデフォルトのカラープロファイルがMacで使っていたものと異なるためです。</p>
+<p>自分の環境では、やけに画面が青白く、バックライトを弱くしても目に刺さるような感じがありました。逆に言えば、それだけMacのいわゆる尿液晶に慣れてしまっているのかもしれません。<br>一応、ブルーライト対策としてはOSXで使用しているf.luxに似たアプリとして、<a href="https://wiki.archlinuxjp.org/index.php/Redshift" target="_blank" rel="external">Redshift</a>を導入済みですが、どうも違和感が拭えません。</p>
+<p>そこで、OSXのカラープロファイルをArch上でも再現することにしました。</p>
+<p>基本的には<a href="https://wiki.archlinuxjp.org/index.php/MacBook#.E3.82.AB.E3.83.A9.E3.83.BC.E3.83.97.E3.83.AD.E3.83.95.E3.82.A1.E3.82.A4.E3.83.AB" target="_blank" rel="external">MacBook - ArchWiki</a>のカラープロファイルの項を参考にしています。</p>
+<h2 id="OSX_u306E_u30AB_u30E9_u30FC_u30D7_u30ED_u30D5_u30A1_u30A4_u30EB_u3092_u53D6_u5F97_u3059_u308B"><a href="#OSX_u306E_u30AB_u30E9_u30FC_u30D7_u30ED_u30D5_u30A1_u30A4_u30EB_u3092_u53D6_u5F97_u3059_u308B" class="headerlink" title="OSXのカラープロファイルを取得する"></a>OSXのカラープロファイルを取得する</h2><p>OSXを起動し、<code>/Library/ColorSync/Profiles/Displays/</code>下にあるカラープロファイル(<code>*.icc</code>)をDropBoxか何かのArchからもアクセスできる場所にコピーします。</p>
+<h2 id="xcalib_u306E_u5C0E_u5165"><a href="#xcalib_u306E_u5C0E_u5165" class="headerlink" title="xcalibの導入"></a>xcalibの導入</h2><p>AURとして提供されている<code>xcalib</code>をインストールします。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yaourt -S xcalib</span><br></pre></td></tr></table></figure>
+<p>試しにカラープロファイルを変更してみましょう。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xcalib &lt;path&gt;/your.icc</span><br></pre></td></tr></table></figure>
+<p>画面の色合いが変化すれば正しく動作しています。</p>
+<h2 id="u81EA_u52D5_u8D77_u52D5_u7528_u30B9_u30AF_u30EA_u30D7_u30C8"><a href="#u81EA_u52D5_u8D77_u52D5_u7528_u30B9_u30AF_u30EA_u30D7_u30C8" class="headerlink" title="自動起動用スクリプト"></a>自動起動用スクリプト</h2><p>先ほどのコマンドを毎回ログイン毎に実行したくはないので、自動的に実行されるようにします。お使いのGUI環境次第ですが、<code>Enlightenment</code>の場合は以下のようにできます。</p>
+<h3 id="sh_u30D5_u30A1_u30A4_u30EB_u306E_u4F5C_u6210"><a href="#sh_u30D5_u30A1_u30A4_u30EB_u306E_u4F5C_u6210" class="headerlink" title="shファイルの作成"></a>shファイルの作成</h3><p>適当な名前をつけて、スクリプトファイルを作成します。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span></span><br><span class="line">xcalib &lt;path&gt;/your.icc</span><br></pre></td></tr></table></figure>
+<p>これを実行可能にします。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x &lt;path&gt;/your_script.sh</span><br></pre></td></tr></table></figure>
+<h3 id="u30B9_u30BF_u30FC_u30C8_u30A2_u30C3_u30D7_u30A2_u30D7_u30EA_u30B1_u30FC_u30B7_u30E7_u30F3_u3068_u3057_u3066_u767B_u9332"><a href="#u30B9_u30BF_u30FC_u30C8_u30A2_u30C3_u30D7_u30A2_u30D7_u30EA_u30B1_u30FC_u30B7_u30E7_u30F3_u3068_u3057_u3066_u767B_u9332" class="headerlink" title="スタートアップアプリケーションとして登録"></a>スタートアップアプリケーションとして登録</h3><p>次に、これをスタートアップアプリケーションとして登録します。<br><code>Enlightenment</code>のメニューから設定-&gt;設定パネル-&gt;アプリケーション-&gt;Personal Application Lanchersを選択します。<br>追加ボタンを押し、先ほどのスクリプトファイルに適当な名前を付けて登録します。</p>
+<p>これで、次回以降のログイン時に、Macのカラープロファイルが適用された状態になります。</p>
+<p>ちょっとした違いですが、感覚的にはだいぶ見やすくなった気がします。</p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/arch/">arch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/mac/">mac</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+	
+    
+<nav id="article-nav">
+  
+  
+    <a href="/log/2015/12/30/arch-and-ssd-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Arch LinuxでProfile-sync-daemonを導入してSSDの劣化を抑える(2)
+        
+      </div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+    </div>
+    <div class="mb-search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:3100.github.io/log">
+  </form>
+</div>
+<footer id="footer">
+	<h1 class="footer-blog-title">
+		<a href="/log/">3log</a>
+	</h1>
+	<span class="copyright">
+		&copy; 2015 3100<br>
+		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
+		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	</span>
+</footer>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/log/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/log/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/log/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>
