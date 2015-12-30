@@ -129,14 +129,14 @@
 	<div class="entry-content">
 		
     	<p>MacBook Air(mid-2012)にArch Linuxを載せて(デュアルブート)動かしています。<br>FirefoxやChromeを使う際に、ブラウザキャッシュの頻繁な書き込みがSSDの寿命を短くするといった言及をいくつか見たので、対応することにしました。</p>
-<p>基本的には以下の記事と、Arch Wikiに従います。</p>
+<p>以下の記事と、<a href="https://wiki.archlinuxjp.org/index.php/Profile-sync-daemon" target="_blank" rel="external">Arch Wikiの該当ページ</a>を参考に、現時点での最新方法を残しておきます。</p>
 <p><a href="http://basicwerk.com/blog/archives/1781" target="_blank" rel="external">Arch Linux を SSD に移した時のメモ | Basic Werk</a></p>
 <p>上記記事で言及されている<code>/etc/fstab</code>の設定についてはArch Linux導入時に済ませているので、割愛します。Arch Wikiの導入ガイドに従っていれば済んでいるかと思います。</p>
 <h2 id="profile-sync-daemon__28AUR_29"><a href="#profile-sync-daemon__28AUR_29" class="headerlink" title="profile-sync-daemon (AUR)"></a>profile-sync-daemon (AUR)</h2><p>ブラウザキャッシュやプロファイルをRAM上で管理するためのサービスを提供します。内部的には<code>rsync</code>を利用して同期を取るようです。</p>
 <p><a href="https://wiki.archlinuxjp.org/index.php/Profile-sync-daemon" target="_blank" rel="external">Profile-sync-daemon - ArchWiki</a></p>
 <p>AURパッケージなのでyaourtの利用を推奨します。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yaourt -S profile-sync-daemon</span><br></pre></td></tr></table></figure>
-<p>Wikiでは<code>/etc/psd.conf</code>を設定ファイルとして利用する書かれていますが、現時点(v6.20)では既にこの方法は陳腐化しています。代わりにユーザのホームフォルダで設定ファイルを管理するようになっています。</p>
+<p>Wikiでは<code>/etc/psd.conf</code>を設定ファイルとして利用すると書かれていますが、現時点(v6.20)では既にこの方法は陳腐化しています。代わりにユーザのホームフォルダで設定ファイルを管理するようになっています。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ profile-sync-daemon parse</span><br></pre></td></tr></table></figure>
 <p>を実行すると、設定ファイルがどこに置かれたかが表示されますので、そのファイルを編集します。デフォルトでは<code>$HOME/.config/psd/psd.conf</code>あたりになるようです。</p>
 <p>自分の環境では<code>firefox</code>(メイン)と<code>google-chrome</code>(AmazonプライムやYoutube用)を使っているので、以下のように設定しています。</p>
