@@ -4,7 +4,7 @@
   
   <link href="/log/atom.xml" rel="self"/>
   <link href="http://3100.github.io/log/"/>
-  <updated>2015-12-30T03:44:21.761Z</updated>
+  <updated>2015-12-30T03:53:54.461Z</updated>
   <id>http://3100.github.io/log/</id>
   
   <author>
@@ -19,13 +19,15 @@
     <link href="http://3100.github.io/log/2015/12/30/arch-and-ssd-2/"/>
     <id>http://3100.github.io/log/2015/12/30/arch-and-ssd-2/</id>
     <published>2015-12-30T03:17:19.000Z</published>
-    <updated>2015-12-30T03:44:21.761Z</updated>
+    <updated>2015-12-30T03:53:54.461Z</updated>
     <content type="html"><![CDATA[<p><a href="http://3100.github.io/log/2015/12/30/arch-and-ssd/">前回</a>の続きです。<br>今回はFirefoxやGoogle Chromeのプロファイル以外のキャッシュディレクトリもRAM上に置くようにします。</p>
 <p>必要なことは簡単で、キャッシュディレクトリをProfile-sync-daemonの管理下に移動し、元の場所にシンボリックリンクを貼るだけです。</p>
 <p>Firefox:</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mv $HOME/.cache/mozilla/firefox/&lt;profile&gt; $HOME/.mozilla/firefox/&lt;profile&gt;/cache</span><br><span class="line">$ ln -s $HOME/.mozilla/firefox/&lt;profile&gt;/cache $HOME/.cache/mozilla/firefox/&lt;profile&gt;</span><br></pre></td></tr></table></figure>
 <p>Google Chrome:</p>
-<figure class="highlight rb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>mv <span class="variable">$HOME</span>/.cache/google-chrome/<span class="constant">Default</span> <span class="variable">$HOME</span>/.config/google-chrome/cache</span><br><span class="line"><span class="variable">$ </span>ln -s <span class="variable">$HOME</span>/.config/google-chrome/cache <span class="variable">$HOME</span>/.cache/google-chrome/<span class="constant">Default</span></span><br><span class="line">~</span><br><span class="line"></span><br><span class="line"><span class="constant">Profile</span>-sync-daemonでの管理フォルダの場所がわからない場合は</span><br><span class="line"></span><br><span class="line">~~~sh</span><br><span class="line"><span class="variable">$ </span>psd parse</span><br></pre></td></tr></table></figure>
+<figure class="highlight rb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>mv <span class="variable">$HOME</span>/.cache/google-chrome/<span class="constant">Default</span> <span class="variable">$HOME</span>/.config/google-chrome/cache</span><br><span class="line"><span class="variable">$ </span>ln -s <span class="variable">$HOME</span>/.config/google-chrome/cache <span class="variable">$HOME</span>/.cache/google-chrome/<span class="constant">Default</span></span><br></pre></td></tr></table></figure>
+<p>Profile-sync-daemonでの管理フォルダの場所がわからない場合は</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ psd parse</span><br></pre></td></tr></table></figure>
 <p>から、<code>sync target</code>の項目で確認できます。</p>
 ]]></content>
     <summary type="html">
