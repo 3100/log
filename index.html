@@ -47,6 +47,89 @@
     <div id="main">
       
   
+    <article id="post-viewing-pdf-on-arch" class="post">
+	<footer class="entry-meta-header">
+		<span class="meta-elements date">
+			<a href="/log/2016/01/01/viewing-pdf-on-arch/" class="article-date">
+  <time datetime="2016-01-01T04:51:51.000Z" itemprop="datePublished">2016-01-01</time>
+</a>
+		</span>
+		<span class="meta-elements author">3100</span>
+		<div class="commentscount">
+			
+		</div>
+	</footer>
+	
+	<header class="entry-header">
+		
+  
+    <h1 itemprop="name" class="entry-title">
+      <a class="article-title" href="/log/2016/01/01/viewing-pdf-on-arch/">Arch Linuxで日本語pdfを閲覧したり、辞書を表示する</a>
+    </h1>
+  
+
+	</header>
+	<div class="entry-content">
+		
+    	<p>2016年が明けました。今年もよろしくお願いします。</p>
+<p>さて、Arch Linux上でpdfを閲覧する方法です。他のディストロ同様に、好みのpdfビューワをインストールすれば良いのですが、</p>
+<ul>
+<li>日本語のpdfをきちんと表示する</li>
+<li>英単語から辞書を引く</li>
+</ul>
+<p>という点について、メモを残しておきます。</p>
+<h2 id="u65E5_u672C_u8A9Epdf_u3092_u304D_u3061_u3093_u3068_u8868_u793A_u3059_u308B"><a href="#u65E5_u672C_u8A9Epdf_u3092_u304D_u3061_u3093_u3068_u8868_u793A_u3059_u308B" class="headerlink" title="日本語pdfをきちんと表示する"></a>日本語pdfをきちんと表示する</h2><p>Archをインストールして、いくつか日本語フォントも入れて、GUIを整備して、ようやくpdfを読もうと思った時、大抵は文字化けしたpdfが表示されるという冴えない結果になります。<br>人によってはいわゆる豆腐文字が表示されたり、あるいは単純に日本語が空白に置き換わってしまうケースもあるでしょう。</p>
+<p>Linuxで用いられるpdfビューワの多くが内部的な処理に<a href="http://poppler.freedesktop.org/" target="_blank" rel="external">poppler</a>を利用しています。自分が使っている<a href="https://www.archlinux.org/packages/community/i686/atril/" target="_blank" rel="external">atril</a>も依存パッケージに<code>poppler-glib</code>を含んでいます。popplerを利用しているpdfビューワでは、フォントが埋め込まれているようなケースで日本語を表示するには<code>poppler-data</code>パッケージを入れる必要があります。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pacman -S poppler-data</span></span><br></pre></td></tr></table></figure>
+<p>インストール後pdfを表示すると、正しく日本語が表示されるかと思います。</p>
+<h2 id="u82F1_u5358_u8A9E_u304B_u3089_u8F9E_u66F8_u3092_u5F15_u304D_u305F_u3044"><a href="#u82F1_u5358_u8A9E_u304B_u3089_u8F9E_u66F8_u3092_u5F15_u304D_u305F_u3044" class="headerlink" title="英単語から辞書を引きたい"></a>英単語から辞書を引きたい</h2><p>OSXなどの標準的なpdfビューワーやKindleアプリなどでは、英単語を選択するだけで英英辞書などが意味をポップアップ表示してくれて、便利ですね。</p>
+<p>これと似たような挙動を実現する辞書ソフトとして、複数の辞書フォーマットに対応している<a href="http://goldendict.org/" target="_blank" rel="external">goldenDict</a>を導入します。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pacman -S goldendict</span></span><br></pre></td></tr></table></figure>
+<p>起動後、以下の設定を行います。</p>
+<ul>
+<li><code>編集</code>-&gt;<code>辞書</code>メニューから辞書ファイルの置き場を指定し、<code>再スキャン</code>を行います。</li>
+<li><code>編集</code>-&gt;<code>環境設定</code>メニューを開きます。<ul>
+<li><code>インターフェイス</code>タブでダブルクリックでの翻訳を有効にします。</li>
+<li><code>スキャンポップアップ</code>タブを開き、スキャンポップアップ機能を有効にします。特定のキーを押しているときのみポップアップさせることもできます。</li>
+</ul>
+</li>
+</ul>
+<p>肝心の辞書ファイルは</p>
+<ul>
+<li>Babylon(.BGL)</li>
+<li>StarDict(.ifo, .dict, .idx, .syn)</li>
+<li>Dictd(.index, .dz)</li>
+<li>Lingvo(.dsl, .lsa, .dat)</li>
+</ul>
+<p>といったLinuxでよく使われている辞書ツールの辞書形式に対応しています。<br>また、オンライン辞書を利用することも可能です。(初期設定のものはクエリが古くて使えないようですが)</p>
+<p>例えばBabylonで利用可能なフリー辞書は以下からダウンロード可能です。</p>
+<p><a href="http://www.babylon.com/free-dictionaries/" target="_blank" rel="external">Dictionaries for every subject - free of charge</a></p>
+<p>専門的な分野の辞書や、昔のWebster英大辞典なども(著作権が切れているため)利用できます。もし手持ちのデジタル辞書があれば、それらも利用できるでしょう。</p>
+<p><img src="https://i.gyazo.com/6685086055d4adb7ab1d19e570791072.jpg" alt=""></p>
+
+    
+	</div>
+	<footer class="entry-footer">
+		<div class="entry-meta-footer">
+			<span class="category">
+				
+			</span>
+			<span class="tags">
+				
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/arch/">arch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/pdf/">pdf</a></li></ul>
+
+			</span>
+		</div>
+	</footer>
+	
+</article>
+
+
+	<hr class="article-devider">
+
+
+
+  
     <article id="post-use-mac-color-profile-with-arch" class="post">
 	<footer class="entry-meta-header">
 		<span class="meta-elements date">
@@ -632,76 +715,6 @@
 
 
   
-    <article id="post-hexo-cannot-find-module" class="post">
-	<footer class="entry-meta-header">
-		<span class="meta-elements date">
-			<a href="/log/2015/08/10/hexo-cannot-find-module/" class="article-date">
-  <time datetime="2015-08-10T14:45:43.000Z" itemprop="datePublished">2015-08-10</time>
-</a>
-		</span>
-		<span class="meta-elements author">3100</span>
-		<div class="commentscount">
-			
-		</div>
-	</footer>
-	
-	<header class="entry-header">
-		
-  
-    <h1 itemprop="name" class="entry-title">
-      <a class="article-title" href="/log/2015/08/10/hexo-cannot-find-module/">hexoでCannot find moduleエラー</a>
-    </h1>
-  
-
-	</header>
-	<div class="entry-content">
-		
-    	<h1 id="hexo_u30B3_u30DE_u30F3_u30C9_u5B9F_u884C_u6642_u306B_u30A8_u30E9_u30FC_u304C_u51FA_u529B_u3055_u308C_u308B"><a href="#hexo_u30B3_u30DE_u30F3_u30C9_u5B9F_u884C_u6642_u306B_u30A8_u30E9_u30FC_u304C_u51FA_u529B_u3055_u308C_u308B" class="headerlink" title="hexoコマンド実行時にエラーが出力される"></a>hexoコマンド実行時にエラーが出力される</h1><p>発生環境は以下の通り。Archでは出ていない。</p>
-<ul>
-<li>iojs v3.0.0</li>
-<li>OSX 10.10.4</li>
-</ul>
-<p>各コマンド実行時に以下のエラーが出力される。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; [<span class="string">Error:</span> Cannot find module <span class="string">'./build/Release/DTraceProviderBindings'</span>] <span class="string">code:</span> <span class="string">'MODULE_NOT_FOUND'</span> &#125;</span><br><span class="line">&#123; [<span class="string">Error:</span> Cannot find module <span class="string">'./build/default/DTraceProviderBindings'</span>] <span class="string">code:</span> <span class="string">'MODULE_NOT_FOUND'</span> &#125;</span><br><span class="line">&#123; [<span class="string">Error:</span> Cannot find module <span class="string">'./build/Debug/DTraceProviderBindings'</span>] <span class="string">code:</span> <span class="string">'MODULE_NOT_FOUND'</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>調べたらissueが上がっていた。</p>
-<p>cf. <a href="https://github.com/hexojs/hexo/issues/1055" target="_blank" rel="external">hexo shows error message · Issue #1055 · hexojs/hexo</a></p>
-<h1 id="u89E3_u6CD5"><a href="#u89E3_u6CD5" class="headerlink" title="解法"></a>解法</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo --no-optional</span><br></pre></td></tr></table></figure>
-<p>すると良いみたい。試したところ確かにエラーが出なくなった。あるいは、最初の<code>npm install</code>時に</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --no-optional</span><br></pre></td></tr></table></figure>
-<p>としてもエラーは出なかった。</p>
-<h2 id="u2013no-optional"><a href="#u2013no-optional" class="headerlink" title="–no-optional"></a>–no-optional</h2><p><a href="https://docs.npmjs.com/cli/install" target="_blank" rel="external">npmのドキュメント</a>によると</p>
-<blockquote>
-<p>The –no-optional argument will prevent optional dependencies from being installed.</p>
-</blockquote>
-<p>とのこと。</p>
-<h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><p><code>--no-optional</code>を付けるかどうかでpackage.jsonは変化するだろうか。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo --no-optional --save</span><br></pre></td></tr></table></figure>
-<p>結論からいうと、package.jsonは変わらなかった。</p>
-<p>別ディレクトリに<code>git clone</code>して<code>npm install</code>するとエラーが発生する。</p>
-
-    
-	</div>
-	<footer class="entry-footer">
-		<div class="entry-meta-footer">
-			<span class="category">
-				
-			</span>
-			<span class="tags">
-				
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/log/tags/npm/">npm</a></li></ul>
-
-			</span>
-		</div>
-	</footer>
-	
-</article>
-
-
-	<hr class="article-devider">
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/log/page/2/">2</a><a class="extend next" rel="next" href="/log/page/2/">Next &raquo;</a>
@@ -720,7 +733,7 @@
 		<a href="/log/">3log</a>
 	</h1>
 	<span class="copyright">
-		&copy; 2015 3100<br>
+		&copy; 2016 3100<br>
 		Modify from <a href="http://sanographix.github.io/tumblr/apollo/" target="_blank">Apollo</a> theme, designed by <a href="http://www.sanographix.net/" target="_blank">SANOGRAPHIX.NET</a><br>
 		Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
 	</span>
