@@ -26,7 +26,7 @@
 という点について、メモを残しておきます。
 日本語pdfをきちんと表示するArchをインストールして、いくつか日本語フォントも入れて、GUIを整備して、よ">
 <meta property="og:image" content="https://i.gyazo.com/6685086055d4adb7ab1d19e570791072.jpg">
-<meta property="og:updated_time" content="2016-01-01T06:56:14.528Z">
+<meta property="og:updated_time" content="2016-01-01T07:03:08.871Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arch Linuxで日本語pdfを閲覧したり、辞書を表示する">
 <meta name="twitter:description" content="2016年が明けました。今年もよろしくお願いします。
@@ -100,11 +100,11 @@
 </ul>
 <p>という点について、メモを残しておきます。</p>
 <h2 id="u65E5_u672C_u8A9Epdf_u3092_u304D_u3061_u3093_u3068_u8868_u793A_u3059_u308B"><a href="#u65E5_u672C_u8A9Epdf_u3092_u304D_u3061_u3093_u3068_u8868_u793A_u3059_u308B" class="headerlink" title="日本語pdfをきちんと表示する"></a>日本語pdfをきちんと表示する</h2><p>Archをインストールして、いくつか日本語フォントも入れて、GUIを整備して、ようやくpdfを読もうと思った時、大抵は文字化けしたpdfが表示されるという冴えない結果になります。<br>人によってはいわゆる豆腐文字が表示されたり、あるいは単純に日本語が空白に置き換わってしまうケースもあるでしょう。</p>
-<p>Linuxで用いられるpdfビューワの多くが内部的な処理に<a href="http://poppler.freedesktop.org/" target="_blank" rel="external">poppler</a>を利用しています。自分が使っている<a href="https://www.archlinux.org/packages/community/i686/atril/" target="_blank" rel="external">atril</a>も依存パッケージに<code>poppler-glib</code>を含んでいます。popplerを利用しているpdfビューワでは、フォントが埋め込まれているようなケースで日本語を表示するには<code>poppler-data</code>パッケージを入れる必要があります。</p>
+<p>Linuxで用いられるpdfビューワの多くが内部的な処理に<a href="http://poppler.freedesktop.org/" target="_blank" rel="external">Poppler</a>を利用しています。自分が使っている<a href="https://www.archlinux.org/packages/community/i686/atril/" target="_blank" rel="external">Atril</a>も依存パッケージに<code>poppler-glib</code>を含んでいます。Popplerを利用しているpdfビューワでは、フォントが埋め込まれているようなケースで日本語を表示するには<code>poppler-data</code>パッケージを入れる必要があります。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pacman -S poppler-data</span></span><br></pre></td></tr></table></figure>
 <p>インストール後pdfを表示すると、正しく日本語が表示されるかと思います。</p>
 <h2 id="u82F1_u5358_u8A9E_u304B_u3089_u8F9E_u66F8_u3092_u5F15_u304D_u305F_u3044"><a href="#u82F1_u5358_u8A9E_u304B_u3089_u8F9E_u66F8_u3092_u5F15_u304D_u305F_u3044" class="headerlink" title="英単語から辞書を引きたい"></a>英単語から辞書を引きたい</h2><p>OSXなどの標準的なpdfビューワーやKindleアプリなどでは、英単語を選択するだけで英英辞書などが意味をポップアップ表示してくれて、便利ですね。</p>
-<p>これと似たような挙動を実現する辞書ソフトとして、複数の辞書フォーマットに対応している<a href="http://goldendict.org/" target="_blank" rel="external">goldenDict</a>を導入します。</p>
+<p>これと似たような挙動を実現する辞書ソフトとして、複数の辞書フォーマットに対応している<a href="http://goldendict.org/" target="_blank" rel="external">GoldenDict</a>を導入します。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pacman -S goldendict</span></span><br></pre></td></tr></table></figure>
 <p>起動後、以下の設定を行います。</p>
 <ul>
