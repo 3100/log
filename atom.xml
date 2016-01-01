@@ -4,7 +4,7 @@
   
   <link href="/log/atom.xml" rel="self"/>
   <link href="http://3100.github.io/log/"/>
-  <updated>2016-01-01T07:03:08.871Z</updated>
+  <updated>2016-01-01T17:53:09.716Z</updated>
   <id>http://3100.github.io/log/</id>
   
   <author>
@@ -13,6 +13,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[アルゴリズムの復習]]></title>
+    <link href="http://3100.github.io/log/2016/01/02/introduction-to-algorithms/"/>
+    <id>http://3100.github.io/log/2016/01/02/introduction-to-algorithms/</id>
+    <published>2016-01-01T16:53:32.000Z</published>
+    <updated>2016-01-01T17:53:09.716Z</updated>
+    <content type="html"><![CDATA[<p>ちょっとしたことから、アルゴリズムの復習をしようと思い立ち、O’Reillyから出ている『入門データ構造とアルゴリズム』を読み始めました。しかし、この本はしょっぱなから誤植やミスが目立つため、豊富なドリルは役に立ちそうですが、心もとない雰囲気があります。<br>それでも我慢して冒頭を読み進めていたのですが、突然 <strong>分割統治法のマスター定理</strong> なるものが出てきて、特に式の説明もなく、こんなもの覚えられるか！とさじを投げました。</p>
+<p>尚、マスター定理というのは、再帰処理によって問題を解くアルゴリズム(たとえば<a href="https://ja.wikipedia.org/wiki/マージソート" target="_blank" rel="external">マージソート</a>)の計算量を(場合によって)求めることができる定理で、計算が容易です。<br>日本語で検索をしてもなかなか解説している資料に出会わないのですが、英Wikipediaに簡単な説明があります。</p>
+<p><a href="https://en.wikipedia.org/wiki/Master_theorem" target="_blank" rel="external">Master theorem - Wikipedia, the free encyclopedia</a></p>
+<p>この説明を読むと、CLRS本として知られるMITプレス発行の『<a href="http://www.amazon.co.jp/Introduction-Algorithms-Thomas-H-Cormen/dp/0262533057" target="_blank" rel="external">Introduction to Algorithms</a>』によって知られるようになった定理だと書いてあります。<br>この本自体は以前手に入れたまま放置していたのですが、せっかくなので該当箇所を読んでみることにしました。が、該当箇所を読むだけではいまいち理解できません。</p>
+<p>もしかして、ここは本当に覚えるべきところなのか。</p>
+<p>気になってきたので、この本を教科書として採用しているMITの講義録を視聴してみることにしました。</p>
+<h2 id="MIT_u306E_u8B1B_u7FA9_u3092_u8996_u8074_u3059_u308B"><a href="#MIT_u306E_u8B1B_u7FA9_u3092_u8996_u8074_u3059_u308B" class="headerlink" title="MITの講義を視聴する"></a>MITの講義を視聴する</h2><p>2005年に行われた講義がオンライン学習用に公開されています。</p>
+<p><a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/" target="_blank" rel="external">Introduction to Algorithms (SMA 5503) | Electrical Engineering and Computer Science | MIT OpenCourseWare</a></p>
+<p>第1回の講義では、概要説明がしばらく続いたあとで、アルゴリズムとは何かという説明があって、その後挿入ソートとマージソートを具体例として計算量の概念を紹介しています。プログラマならこのあたりは余裕ですね。<br>(余談ですが、演習課題はまず自力で考え、30分以上悩んでも解答がわからなければ、時間の無駄だから友達に聞こうっていうアドバイスが、さすが合理的だなと思いました。あとは、何をしたら単位がもらえないとか、そういう話をきちんとするのも良いですね。)</p>
+<iframe src="http://www.youtube.com/v/JPyuH4qXLZ0" height="325" width="545" frameborder="0"></iframe>
+
+<p>マスター定理は第2回の講義で扱われています。この先生は天才肌っぽい感じがします(1981年生まれで教授!)が、本人も言及している通りハイスピードで説明が進みます。でも、ついてこれなかったらすぐ聞いてね！ペース落とすから！っていうのが優しい配慮ですね。</p>
+<iframe src="http://www.youtube.com/v/whjt_N9uYFI" height="325" width="545" frameborder="0"></iframe>
+
+<p>この2回の講義を通しで聴いて、ようやくマスター定理の言わんとするところが見えてきました。これは暗記するような性質のものではなく、意味を理解することが大切でした。</p>
+<h2 id="u8CC7_u6599_u3082_u5145_u5B9F"><a href="#u8CC7_u6599_u3082_u5145_u5B9F" class="headerlink" title="資料も充実"></a>資料も充実</h2><p>授業の英語についていけなくても、きちんとレジュメが配信されています。下の資料は第2回の分ですが、ずいぶんきちんと書かれていて、復習用(フォローアップ)に最適です。</p>
+<p><a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/video-lectures/lecture-2-asymptotic-notation-recurrences-substitution-master-method/lec2.pdf" target="_blank" rel="external">Asymptotic Notation and Recurrences - lec2.pdf</a></p>
+<p>自分が通っていた大学もノートは取らなくて済むようにレジュメが配られることが多かったですが、こんなにわかりやすくなかったですね。。これだけ用意してもらえるなら、授業は先生の一挙手一投足に集中することができますね。</p>
+<h2 id="MIT_u306F_u53B3_u3057_u3044"><a href="#MIT_u306F_u53B3_u3057_u3044" class="headerlink" title="MITは厳しい"></a>MITは厳しい</h2><p>これだけ見ると、さすが世界屈指の大学だけあって充実してるなという印象です。が、その分求められるものも結構シビアです。この講義は1週間に2回ずつ、各1.5時間で行われ、だいたい1週間に1回、以下のような宿題が課せられます。</p>
+<p><a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/assignments/ps1.pdf" target="_blank" rel="external">ps1.pdf</a></p>
+<p>この中でProblemというのが提出課題でExerciseは自主課題ですが、Problemを提出しないと、期末成績がどんどん減点されていきます。課題自体も結構多いのに、問題自体もなかなか味のある内容です。<br>Exercice 1-3. はその前の課題に証明が書いてあるのに気づかず、個人的にかなり苦戦しました。。</p>
+<p>ふと、第1回の講義でlogが絡んだ総和の計算が出てきて、数学はPrerequisitesだからね！と先生が冗談めかして言っているのを思い出しました。確かにシラバスにもはっきり書いてあります。要求がはっきりしているのも、アメリカらしいと感じます。</p>
+<h2 id="u307E_u3068_u3081"><a href="#u307E_u3068_u3081" class="headerlink" title="まとめ"></a>まとめ</h2><p>ふとアルゴリズムの復習をしようと思い立った結果、気がついたらMITの講義を2回聞き、課題を解いていました。<br>世間ではCLRS本を輪読したり、独学している方もいるようですが、もしかすると講義録に沿って学習を進めていくことで、割合短期間に終わらせることができるかもしれません。</p>
+<p>個人的には冒頭に言及していたO’Reillyのアルゴリズムの本がコンパクトなので、あくまでそちらをメインに据えたいなと考えていますが、もしかしたらMIT講義録に移行するかもしれません。</p>
+<p>飽きっぽくなかなか大きなことは続かない性格ですが、2016年は継続力も磨ければなぁと思います。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>ちょっとしたことから、アルゴリズムの復習をしようと思い立ち、O’Reillyから出ている『入門データ構造とアルゴリズム』を読み始めました。しかし、この本はしょっぱなから誤植やミスが目立つため、豊富なドリルは役に立ちそうですが、心もとない雰囲気があります。<br>それでも我慢]]>
+    </summary>
+    
+      <category term="algorithm" scheme="http://3100.github.io/log/tags/algorithm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Arch Linuxで日本語pdfを閲覧したり、辞書を表示する]]></title>
